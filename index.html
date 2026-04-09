@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat Index Checker</title>
+    
+    <style>
+        body {
+            background-color: #f3f3f3;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .checker-card {
+            background-color: #1a1d23;
+            color: #ffcc00; 
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .note {
+            color: #ffffff;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #ffffff;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        button {
+            background-color: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+        }
+
+    
+    </style>
+</head>
+<body>
+
+    <div class="checker-card">
+        <h2>Heat Index Checker</h2>
+        
+        <div class="note">
+            <strong>▼ Note:</strong><br>
+            Input the temperature (°C) and humidity (%), then click Check to see the heat index and its status.
+        </div>
+
+        <div class="input-group">
+            <label>Degree in °C</label>
+            <input type="number" id="tempInput" placeholder="25">
+        </div>
+
+        <div class="input-group">
+            <label>humidity in %</label>
+            <input type="number" id="humInput" placeholder="45">
+        </div>
+
+        <button onclick="checkHeatIndex()">Check</button>
+    
+
+    <script>
+        function checkHeatIndex() {
+            const temp = parseFloat(document.getElementById('tempInput').value);
+            
+            if (isNaN(temp)) {
+                alert("Please enter a valid temperature.");
+                return;
+            }
+
+            let category = "";
+            let status = "";
+            let range = "";
+
+            if (temp >= 20 && temp <= 24) {
+                category = "level1";
+            } else if (temp >= 25 && temp <= 27) {
+                category = "level2";
+            } else if (temp >= 28 && temp <= 31) {
+                category = "level3";
+            } else if (temp >= 32 && temp <= 35) {
+                category = "level4";
+            } else if (temp >= 36) {
+                category = "level5";
+            } else {
+                alert("Temperature is outside the defined table ranges.");
+                return;
+            }
+
+            switch (category) {
+                case "level1":
+                    range = "≤ 27°C";
+                    status = "Comfortable / Cool";
+                    break;
+                case "level2":
+                    range = "28 - 32°C";
+                    status = "Warm";
+                    break;
+                case "level3":
+                    range = "33 - 37°C";
+                    status = "Hot";
+                    break;
+                case "level4":
+                    range = "38 - 41°C";
+                    status = "Very Hot / Caution";
+                    break;
+                case "level5":
+                    range = "≥ 42°C";
+                    status = "Extreme Heat / Danger";
+                    break;
+            }
+
+            alert("Heat Index: " + range + "\nStatus: " + status);
+        }
+    </script>
+</body>
+</html>
